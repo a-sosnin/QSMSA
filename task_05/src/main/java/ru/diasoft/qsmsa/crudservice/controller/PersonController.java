@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
-@RequestMapping("persons")
+@RequestMapping("person")
 public class PersonController {
     private SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
@@ -19,7 +19,7 @@ public class PersonController {
     PersonServiceImpl personService;
 
     @GetMapping
-    public List<Person> getPersons() {
+    public List<Person> getUsers() {
         return personService.getAll();
     }
 
