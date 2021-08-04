@@ -1,0 +1,97 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-task-05.yaml
+  - changeSet:
+      id: 1
+      author: asosnin
+      changes:
+        - createTable:
+            tableName: person
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: middle_name
+                  type: varchar(64)
+              - column:
+                  name: date_of_birth
+                  type: datetime
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 2
+      author: asosnin
+      changes:
+        - createSequence:
+            cacheSize: 1
+            cycle: false
+            dataType: bigint
+            incrementBy: 1
+            minValue: 0
+            sequenceName: person_sequence
+            startValue: 0
+  - changeSet:
+      id: 3
+      author: asosnin
+      comment: "Create test persons"
+      changes:
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: last_name
+                  value: "Иванов"
+              - column:
+                  name: first_name
+                  value: "Иван"
+              - column:
+                  name: middle_name
+                  value: "Иванович"
+              - column:
+                  name: date_of_birth
+                  value: "1983-03-16T03:00:00"
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: last_name
+                  value: "Петров"
+              - column:
+                  name: first_name
+                  value: "Петр"
+              - column:
+                  name: middle_name
+                  value: "Петрович"
+              - column:
+                  name: date_of_birth
+                  value: "1987-04-26T03:00:00"
+        - insert:
+            tableName: person
+            columns:
+              - column:
+                  name: last_name
+                  value: "Johnson"
+              - column:
+                  name: first_name
+                  value: "John"
+              - column:
+                  name: date_of_birth
+                  value: "1956-11-06T03:00:00"
+      rollback:
+        - delete:
+            tableName: person
+            where: last_name in ('Иванов', 'Петров', 'Johnson')
